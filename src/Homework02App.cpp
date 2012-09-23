@@ -11,7 +11,18 @@ class Homework02App : public AppBasic {
 	void mouseDown( MouseEvent event );	
 	void update();
 	void draw();
+	void prepareSettings(Settings* settings);
+
+private:
+	static const int kAppWidth=1280;
+	static const int kAppHeight=720;
 };
+
+
+void Homework02App::prepareSettings(Settings* settings){
+	settings->setWindowSize(kAppWidth,kAppHeight);
+	settings->setResizable(false);
+}
 
 void Homework02App::setup()
 {
