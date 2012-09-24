@@ -1,3 +1,18 @@
+/*
+ * @file Homework02App.cpp
+ * An app that fulfills certain requirements for Homework02
+ *
+ * @author Mike Marsden
+ * @date 2012-09-23
+ *
+ * @note This file is (c) 2012. It is licensed under the 
+ * CC BY 3.0 license (http://creativecommons.org/licenses/by/3.0/),
+ * which means you are free to use, share, and remix it as long as you
+ * give attribution. Commercial uses are allowed.
+ *
+ * This program satisfies the following requirements: A (linked list), B(message displayed),
+ * C (re-order items by click), E(reverse items by keyboard), G (utilizing transparency)
+ */ 
 #include "cinder/app/AppBasic.h"
 #include "cinder/gl/gl.h"
 #include "Circle.h"
