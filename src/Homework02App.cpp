@@ -16,12 +16,13 @@ using namespace std;
 class Homework02App : public AppBasic {
   public:
 	void setup();
-	void keyDown( KeyEvent event );
-	void mouseDown( MouseEvent event );	
+	void keyDown(KeyEvent event);
+	void mouseDown(MouseEvent event);	
 	void update();
 	void draw();
 	void prepareSettings(Settings* settings);
 	void bringClickedToFront(Node* clicked_node);
+	Node* getClickedNode(Vec2i click);
 
 	bool toggleOn;
 	Font				mFont;
@@ -31,9 +32,8 @@ private:
 	static const int kAppWidth=800;
 	static const int kAppHeight=600;
 	static const int kTextureSize=1024;
-	static const Vec2f kX;
-	static const Vec2f kY;
 
+	// Declares the necessary node*
 	Node *sentinel;
 	Node *nodeOne;
 	Node *nodeTwo;
@@ -41,6 +41,7 @@ private:
 	Node *nodeFour;
 	Node *nodeFive;
 
+	// Declaring the "olympic rings"
 	Circle *blueCircle;
 	Circle *yellowCircle;
 	Circle *blackCircle;
@@ -49,9 +50,6 @@ private:
 
 	int frame_number_;
 };
-
-const Vec2f Homework02App::kX = Vec2f(.5f, -.5f);
-const Vec2f Homework02App::kY = Vec2f(.5f, .5f);
 
 void Homework02App::prepareSettings(Settings* settings){
 	settings->setWindowSize(kAppWidth,kAppHeight);
@@ -84,6 +82,7 @@ void Homework02App::setup()
 	sentinel = new Node(nodeOne, nodeFive);
 
 	// 'Links' up the nodes from sentinel, to the five circles one by one
+	// Uses a doubly-linked circular linked list
 	nodeOne -> addNodePointers(nodeTwo, sentinel);
 	nodeTwo -> addNodePointers(nodeThree, nodeOne);
 	nodeThree -> addNodePointers(nodeFour, nodeTwo);
@@ -111,7 +110,7 @@ void Homework02App::keyDown(KeyEvent event)
 			}
 		break;
 		
-		// Handles if the user wishes to reorder the items 
+		// Handles if the user wishes to reverse the items 
 		case 'R':
 		case 'r':
 
@@ -121,25 +120,35 @@ void Homework02App::keyDown(KeyEvent event)
 	}
 }
 
+Node* Homework02App::getClickedNode(Vec2i click) {
+	Node* selected_node = sentinel -> previous_;
+	Node* current_ = sentinel -> next_;
+
+	//While loop cycles through the linked list
+	while(current_ != sentinel){
+		//Only updates selected_node if the circle is inside the click
+		if(current_ -> isPointInside(click))
+			selected_node = current_;
+		current_ = current_ -> next_;
+	}
+	return selected_node;
+}
 void Homework02App::bringClickedToFront(Node* clicked_node){
 	clicked_node -> previous_ -> next_ = clicked_node -> next_;
 	clicked_node -> next_ -> previous_ = clicked_node -> previous_;
-
 	clicked_node -> next_ = sentinel;
 	clicked_node -> previous_ = sentinel -> previous_;
-
 	sentinel -> previous_ -> next_ = clicked_node;
 	sentinel -> previous_ = clicked_node;
 
 }
-void Homework02App::mouseDown( MouseEvent event )
+void Homework02App::mouseDown(MouseEvent event)
 {
 	Vec2i click = event.getPos();
-
-	Node *selected_node = getSelectedNode(click);
+	Node *selected_node = getClickedNode(click);
 
 	if(selected_node != NULL)
-		bringClickedToFront(selected_node);
+		bringClickedToFront(selected_node); 
 }
 
 void Homework02App::update()
@@ -148,7 +157,6 @@ void Homework02App::update()
 
 	Node* current_ = sentinel -> next_;
 	do{
-		//current_ -> moveShape(frame_number_);
 		current_  = current_ -> next_;
 	} while(current_ != sentinel);
 }
@@ -166,7 +174,7 @@ void Homework02App::draw()
 	gl::drawSolidRect(Rectf(200,200,400,400), false);
 	
 	//Creates the string for instructions
-	std::string str( "Press '?' to toggle these instructions on/off the screen." );
+	std::string str( "Click any of the rings to bring them to the front of the screen. Press '?' to toggle these instructions on/off the screen." );
 	Rectf boundsRect( 40, mTextureFont->getAscent() + 40, getWindowWidth() - 40, getWindowHeight() - 40 );
 
 	//Text color
