@@ -22,6 +22,7 @@ class Homework02App : public AppBasic {
 	void draw();
 	void prepareSettings(Settings* settings);
 	void bringClickedToFront(Node* clicked_node);
+	void reverse(Node* sentinel);
 	Node* getClickedNode(Vec2i click);
 
 	bool toggleOn;
@@ -113,8 +114,7 @@ void Homework02App::keyDown(KeyEvent event)
 		// Handles if the user wishes to reverse the items 
 		case 'R':
 		case 'r':
-
-
+			reverse(sentinel);
 		break;
 
 	}
@@ -140,8 +140,19 @@ void Homework02App::bringClickedToFront(Node* clicked_node){
 	clicked_node -> previous_ = sentinel -> previous_;
 	sentinel -> previous_ -> next_ = clicked_node;
 	sentinel -> previous_ = clicked_node;
-
 }
+
+// Referenced from notes from class lecture
+void Homework02App::reverse(Node* sentinel) {
+	Node* cur = sentinel;
+	do {
+		Node* temp = cur-> next_;
+		cur->next_ = cur-> previous_;
+		cur->previous_ = temp;
+		cur = cur -> previous_;
+	} while (cur != sentinel);
+}
+
 void Homework02App::mouseDown(MouseEvent event)
 {
 	Vec2i click = event.getPos();
@@ -166,19 +177,59 @@ void Homework02App::draw()
 	gl::enableAlphaBlending();
 	gl::clear(Color(120,120,120));
 
-	gl::color(Color(255,0,0));
-	gl::drawSolidRect(Rectf(0,0,200,200), false);
+	//Draws the 12 squares for the background
+	//Row 1
+	gl::color(ColorA(255,0,0,.5f));
+	gl::drawSolidRect(Rectf(0,0,200,200), false);	
+	gl::color(ColorA(255,255,0,.5f));
+	gl::drawSolidRect(Rectf(200,0,400,200), false);
 	gl::color(ColorA(0,0,255,.5f));
-	gl::drawSolidRect(Rectf(100,100,300,300), false);
+	gl::drawSolidRect(Rectf(400,0,600,200), false);
 	gl::color(ColorA(0,255,0,.5f));
+	gl::drawSolidRect(Rectf(600,0,800,200), false);
+
+	//Row 2
+	gl::color(ColorA(0,255,0,.5f));
+	gl::drawSolidRect(Rectf(0,200,200,400), false);	
+	gl::color(ColorA(255,0,0,.5f));
 	gl::drawSolidRect(Rectf(200,200,400,400), false);
-	
+	gl::color(ColorA(255,255,0,.5f));
+	gl::drawSolidRect(Rectf(400,200,600,400), false);
+	gl::color(ColorA(0,0,255,.5f));
+	gl::drawSolidRect(Rectf(600,200,800,400), false);
+
+	//Row 3
+	gl::color(ColorA(0,0,255,.5f));
+	gl::drawSolidRect(Rectf(0,400,200,600), false);	
+	gl::color(ColorA(0,255,0,.5f));
+	gl::drawSolidRect(Rectf(200,400,400,600), false);
+	gl::color(ColorA(255,0,0,.5f));
+	gl::drawSolidRect(Rectf(400,400,600,600), false);
+	gl::color(ColorA(255,255,0,.5f));
+	gl::drawSolidRect(Rectf(600,400,800,600), false);
+
+	//Inner Row 1
+	gl::color(ColorA(255,0,0,.5f));
+	gl::drawSolidRect(Rectf(100,100,300,300), false);	
+	gl::color(ColorA(0,255,0,.5f));
+	gl::drawSolidRect(Rectf(300,100,500,300), false);
+	gl::color(ColorA(0,0,255,.5f));
+	gl::drawSolidRect(Rectf(500,100,700,300), false);
+
+	//Inner Row 2
+	gl::color(ColorA(0,0,255,.5f));
+	gl::drawSolidRect(Rectf(100,300,300,500), false);	
+	gl::color(ColorA(255,0,0,.5f));
+	gl::drawSolidRect(Rectf(300,300,500,500), false);
+	gl::color(ColorA(0,255,255,.5f));
+	gl::drawSolidRect(Rectf(500,300,700,500), false);
+
 	//Creates the string for instructions
-	std::string str( "Click any of the rings to bring them to the front of the screen. Press '?' to toggle these instructions on/off the screen." );
+	std::string str( "Click any of the rings to bring them to the front of the screen. Press 'R' to reverse the order of the rings. Press '?' to toggle these instructions on/off the screen." );
 	Rectf boundsRect( 40, mTextureFont->getAscent() + 40, getWindowWidth() - 40, getWindowHeight() - 40 );
 
 	//Text color
-	ColorA semiTransparent = ColorA(.0f,.5f,.0f,.9f);
+	ColorA semiTransparent = ColorA(0,0,0,.9f);
 	gl::color(semiTransparent);
 	mTextureFont->drawStringWrapped( str, boundsRect );
 
