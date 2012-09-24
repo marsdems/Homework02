@@ -1,5 +1,5 @@
-#ifndef SHAPE_H
-#define SHAPE_H
+#ifndef CIRCLE_H
+#define CIRCLE_H
 /*
  * @file Circle.h
  * A circle class.
@@ -26,7 +26,6 @@ private:
 	Vec2f center_;
 	float radius_;
 	ColorA color_;
-
 };
 
 #endif

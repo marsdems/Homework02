@@ -22,20 +22,14 @@
 using namespace ci;
 using namespace ci::app;
 using namespace std;
+int counter;
 
 Circle::Circle(Vec2f center, float radius, ColorA c1) {	
 	center_ = center;
 	radius_ = radius;
 	color_ = c1;
+	counter = 0;
 }
-// Referenced from the notes from class
-/*
-void insertAfter(Circle* new_item, Circle* insert_here){
-	new_item->next_ = insert_here->next_;
-	new_item->prev_ = insert_here;
-	insert_here->next_->prev_ = new_item;
-	insert_here->next_ = new_item;
-} */
 
 void Circle::update() {
 
@@ -48,9 +42,11 @@ bool Circle::isPointInside(Vec2i point){
 
 void Circle::draw() {
 	gl::enableAlphaBlending;
+	//Draws the outer circle which makes the 'rings'
 	gl::color(color_);
 	gl::drawSolidCircle(center_, radius_);
+
+	//Draws the inner circle, with a high level of transparency
 	gl::color(ColorA(120,120,120, 0.9f));
-	gl::drawSolidCircle(center_, radius_-5);
-	
+	gl::drawSolidCircle(center_, radius_-5);	
 }

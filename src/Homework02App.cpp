@@ -116,7 +116,6 @@ void Homework02App::keyDown(KeyEvent event)
 		case 'r':
 			reverse(sentinel);
 		break;
-
 	}
 }
 
