@@ -51,6 +51,9 @@ void Homework02App::setup()
 	tempFont = Font("", 0);
 	mTextureFont = gl::TextureFont::create(mFont);
 	toggleOn = true;
+
+	Vec2f pos = (kAppWidth/2.0f)* kX + (kAppHeight/2.0f) * kY;
+	circleList_= new Circle(4, pos, Vec2f(0,0), kAppHeight/2.0f);
 }
 
 void Homework02App::keyDown(KeyEvent event)
@@ -85,19 +88,21 @@ void Homework02App::keyDown(KeyEvent event)
 
 void Homework02App::mouseDown( MouseEvent event )
 {
+	//Vec2f mousePoint = Vec2f((float)event.getX(), (float)event.getY());
+	//gl::drawSolidCircle(mousePoint, 30, 0);
 }
 
 void Homework02App::update()
 {
 	Circle* cur = circleList_;
 	Vec2f center = kX * kAppWidth/2.0 + kY * kAppHeight/2.0;
-	 /*
+	 
 	if (cur != NULL) {
 		do {
 			cur-> update(center, kAppWidth/2.0);
 			cur = cur->next_;
 		} while (cur != circleList_);
-	} */
+	} 
 	frame_number_++;
 }
 
@@ -113,7 +118,6 @@ void Homework02App::draw()
 	gl::color(ColorA(0,255,0,.5f));
 	gl::drawSolidRect(Rectf(200,200,400,400), false);
 	
-	//gl::drawSolidRect
 	//Creates the string for instructions
 	std::string str( "Press '?' to toggle these instructions on/off the screen." );
 	Rectf boundsRect( 40, mTextureFont->getAscent() + 40, getWindowWidth() - 40, getWindowHeight() - 40 );
@@ -124,13 +128,13 @@ void Homework02App::draw()
 	mTextureFont->drawStringWrapped( str, boundsRect );
 
 	Circle* cur = circleList_;
-	/*
+	
 	if(cur != NULL){
 		do {
 			cur->draw(getMousePos());
 			cur = cur->next_;
 		} while (cur != circleList_);
-	} */
+	} 
 }
 
 CINDER_APP_BASIC( Homework02App, RendererGl )

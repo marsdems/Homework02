@@ -30,10 +30,10 @@ Circle::Circle(int depth, Vec2f position, Vec2f offset, float radius) {
 	position_ = position;
 	radius_ = radius;
 
-
-
-
-
+	if (depth > 0)
+	{ 
+		addChild(depth-1);
+	}
 }
 // Referenced from the notes from class
 void insertAfter(Circle* new_item, Circle* insert_here){
@@ -45,17 +45,31 @@ void insertAfter(Circle* new_item, Circle* insert_here){
 
 void Circle::update(Vec2f parent_position, float parent_r) {
 
-
+	Circle* cur = children_;
+	if (cur != NULL) {
+		do {
+			cur->update(position_,radius_);
+			cur = cur->next_;
+		} while (cur->next_ != children_);
+	}
 }
 
-void Circle::draw(Vec2f center){
-	//First, draw myself
-	
-	gl::drawSolidCircle(center, 30, 0);
-	//Next, draw my children
+void Circle::addChild(int depth) {
+	Circle* new_item = new Circle(depth, position_, Vec2f(0.0, 0.0), 2.5*radius_);
+
+	if (children_ != NULL) {
+		insertAfter(new_item, children_);
+	} else {
+		children_ = new_item;
+	}
+}
+
+void Circle::draw(Vec2i center){
 	Circle* cur = children_;
 	if(cur != NULL){
-		do {
+		gl::color(ColorA(255,255,255,.5f));
+		gl::drawSolidCircle(center, 30, 0);
+		do {			
 			cur->draw(center);
 			cur = cur->next_;
 		} while (cur->next_ != children_);

@@ -14,17 +14,20 @@
 class Circle{
 public:	
 	Circle(int depth, ci::Vec2f position, ci::Vec2f offset, float radius);
-	//Pointers to my siblings
+
+	//Pointers to siblings
 	Circle* next_;
 	Circle* prev_;
-	//Pointer to the sentinel for my list of children.
+
+	//Pointer to the sentinel
 	Circle* children_;
 
 	ci::Vec2f offset_;
 	ci::Vec2f position_;
 	float radius_;
 
-	void draw(ci::Vec2f center);
+	void draw(ci::Vec2i center);
 	void update(ci::Vec2f parent_position, float parent_r);
+	void addChild(int depth);
 };
 void insertAfter(Circle* new_item, Circle* insert_here);
