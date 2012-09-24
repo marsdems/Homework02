@@ -106,6 +106,14 @@ void Homework02App::draw()
 	gl::enableAlphaBlending();
 	gl::clear(Color(0,0,0));
 
+	gl::color(Color(255,0,0));
+	gl::drawSolidRect(Rectf(0,0,200,200), false);
+	gl::color(ColorA(0,0,255,.5f));
+	gl::drawSolidRect(Rectf(100,100,300,300), false);
+	gl::color(ColorA(0,255,0,.5f));
+	gl::drawSolidRect(Rectf(200,200,400,400), false);
+	
+	//gl::drawSolidRect
 	//Creates the string for instructions
 	std::string str( "Press '?' to toggle these instructions on/off the screen." );
 	Rectf boundsRect( 40, mTextureFont->getAscent() + 40, getWindowWidth() - 40, getWindowHeight() - 40 );
