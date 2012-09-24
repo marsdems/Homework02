@@ -106,9 +106,11 @@
   <ItemGroup>
     <ClCompile Include="..\src\Circle.cpp" />
     <ClCompile Include="..\src\Homework02App.cpp" />
+    <ClCompile Include="..\src\Node.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\Circle.h" />
+    <ClInclude Include="..\include\Node.h" />
     <ClInclude Include="..\include\Resources.h" />
   </ItemGroup>
   <ItemGroup>

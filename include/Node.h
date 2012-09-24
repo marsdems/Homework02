@@ -1,8 +1,6 @@
-#ifndef SHAPE_H
-#define SHAPE_H
 /*
- * @file Circle.h
- * A circle class.
+ * @file Node.h
+ * A node class
  *
  * @author Mike Marsden
  * @date 2012-09-23
@@ -13,20 +11,24 @@
  * give attribution. Commercial uses are allowed.
  */ 
 #include "cinder\gl\gl.h"
+#include "Circle.h"
+
 using namespace ci;
 
-class Circle {
+class Node {
+public:
+	//Pointer for each node
+	Circle *nodeData_;
+	Node *next_;
+	Node *previous_;
 
-public:	
-	Circle(Vec2f center, float radius, ColorA c1);
-	void update();
+	//Various Node constructors
+	Node(Circle *nodeData, Node *next, Node *previous);
+	Node(Circle *nodeData);
+	Node(Node *next, Node *previous);
+	
+	//Methods for nodes
+	void addNodePointers(Node *next_node, Node *prev_node);
 	void draw();
 	bool isPointInside(Vec2i point);
-private:
-	Vec2f center_;
-	float radius_;
-	ColorA color_;
-
 };
-
-#endif

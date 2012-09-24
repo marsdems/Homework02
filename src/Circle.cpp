@@ -1,6 +1,6 @@
 /*
  * @file Circle.cpp
- * A circle that can contain multiple circles in itself.
+ * A circle class.
  *
  * @author Mike Marsden
  * @date 2012-09-23
@@ -13,6 +13,7 @@
 #include "cinder/gl/gl.h"
 #include "cinder/app/AppBasic.h"
 #include "Circle.h"
+#include "Node.h"
 #include "cinder/Rand.h";
 #include "cinder/gl/Texture.h"
 #include "cinder/ImageIo.h"
@@ -22,57 +23,34 @@ using namespace ci;
 using namespace ci::app;
 using namespace std;
 
-Circle::Circle(int depth, Vec2f position, Vec2f offset, float radius) {
-	next_ = prev_ = this;
-	children_ = NULL;
-
-	offset_ = offset;
-	position_ = position;
+Circle::Circle(Vec2f center, float radius, ColorA c1) {	
+	center_ = center;
 	radius_ = radius;
-
-	if (depth > 0)
-	{ 
-		addChild(depth-1);
-	}
+	color_ = c1;
 }
 // Referenced from the notes from class
+/*
 void insertAfter(Circle* new_item, Circle* insert_here){
 	new_item->next_ = insert_here->next_;
 	new_item->prev_ = insert_here;
 	insert_here->next_->prev_ = new_item;
 	insert_here->next_ = new_item;
+} */
+
+void Circle::update() {
+
 }
 
-void Circle::update(Vec2f parent_position, float parent_r) {
-
-	Circle* cur = children_;
-	if (cur != NULL) {
-		do {
-			cur->update(position_,radius_);
-			cur = cur->next_;
-		} while (cur->next_ != children_);
-	}
+// Referenced this method's code from Cooper Riley
+bool Circle::isPointInside(Vec2i point){
+	return (sqrt(pow((point.x-center_.x),2)+pow((point.y-center_.y),2))<=radius_);
 }
 
-void Circle::addChild(int depth) {
-	Circle* new_item = new Circle(depth, position_, Vec2f(0.0, 0.0), 2.5*radius_);
-
-	if (children_ != NULL) {
-		insertAfter(new_item, children_);
-	} else {
-		children_ = new_item;
-	}
-}
-
-void Circle::draw(Vec2i center){
-	Circle* cur = children_;
-	if(cur != NULL){
-		gl::color(ColorA(255,255,255,.5f));
-		gl::drawSolidCircle(center, 30, 0);
-		do {			
-			cur->draw(center);
-			cur = cur->next_;
-		} while (cur->next_ != children_);
-	}
+void Circle::draw() {
+	gl::enableAlphaBlending;
+	gl::color(color_);
+	gl::drawSolidCircle(center_, radius_);
+	gl::color(ColorA(120,120,120, 0.9f));
+	gl::drawSolidCircle(center_, radius_-5);
 	
 }
