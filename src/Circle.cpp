@@ -47,6 +47,6 @@ void Circle::draw() {
 	gl::drawSolidCircle(center_, radius_);
 
 	//Draws the inner circle, with a high level of transparency
-	gl::color(ColorA(120,120,120, 0.9f));
+	gl::color(ColorA(120,120,120, 0.5f));
 	gl::drawSolidCircle(center_, radius_-5);	
 }

@@ -11,7 +11,9 @@
  * give attribution. Commercial uses are allowed.
  *
  * This program satisfies the following requirements: A (linked list), B(message displayed),
- * C (re-order items by click), E(reverse items by keyboard), G (utilizing transparency)
+ * C (re-order items by click), E(reverse items by keyboard), G (utilizing transparency).
+ *
+ * For stretch goals, I was unable to complete any of them. My goal was to try and incorporate 
  */ 
 #include "cinder/app/AppBasic.h"
 #include "cinder/gl/gl.h"
@@ -43,6 +45,7 @@ class Homework02App : public AppBasic {
 	bool toggleOn;
 	Font				mFont;
 	Font				tempFont;
+	Font				answerFont;
 	gl::TextureFontRef	mTextureFont;
 private:
 	static const int kAppWidth=800;
@@ -77,6 +80,7 @@ void Homework02App::setup()
 	frame_number_ = 0;
 	mFont = Font("Times New Roman", 28);
 	tempFont = Font("", 0);
+	answerFont = Font("Times New Roman", 28);
 	mTextureFont = gl::TextureFont::create(mFont);
 	toggleOn = true;
 
@@ -130,6 +134,11 @@ void Homework02App::keyDown(KeyEvent event)
 		case 'R':
 		case 'r':
 			reverse(sentinel);
+		break;
+
+		case 'A':
+		case 'a':
+	
 		break;
 	}
 }
@@ -239,7 +248,7 @@ void Homework02App::draw()
 	gl::drawSolidRect(Rectf(500,300,700,500), false);
 
 	//Creates the string for instructions
-	std::string str( "Click any of the rings to bring them to the front of the screen. Press 'R' to reverse the order of the rings. Press '?' to toggle these instructions on/off the screen." );
+	std::string str( "Click any of the rings to bring them to the front of the screen. Press 'R' to reverse the order of the rings. Press '?' to toggle these instructions on/off the screen. Mini-game: Count the number of squares displayed on the screen!");
 	Rectf boundsRect( 40, mTextureFont->getAscent() + 40, getWindowWidth() - 40, getWindowHeight() - 40 );
 
 	//Text color
