@@ -10,18 +10,24 @@
  * which means you are free to use, share, and remix it as long as you
  * give attribution. Commercial uses are allowed.
  */ 
-#include "cinder/gl/gl.h"
-#include "cinder/app/AppBasic.h"
+
+/*
+The following lins that I commented out are redundant because they are not
+needed for the Circle.cpp file and are already included in the Homework02App.cpp.
+*/
+
+//#include "cinder/gl/gl.h"
+//#include "cinder/app/AppBasic.h"
 #include "Circle.h"
 #include "Node.h"
-#include "cinder/Rand.h";
-#include "cinder/gl/Texture.h"
-#include "cinder/ImageIo.h"
+//#include "cinder/Rand.h";
+//#include "cinder/gl/Texture.h"
+//#include "cinder/ImageIo.h"
 #include "Resources.h"
 
-using namespace ci;
-using namespace ci::app;
-using namespace std;
+//using namespace ci;
+//using namespace ci::app;
+//using namespace std;
 int counter;
 
 Circle::Circle(Vec2f center, float radius, ColorA c1) {	

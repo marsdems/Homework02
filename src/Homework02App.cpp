@@ -187,16 +187,28 @@ void Homework02App::mouseDown(MouseEvent event)
 
 void Homework02App::update()
 {
+
+	//This code doesn't seem to do anything other than interating through
+	//Your linked list and using up memory.
+	
+	/*
 	frame_number_++;
 
 	Node* current_ = sentinel -> next_;
 	do{
 		current_  = current_ -> next_;
 	} while(current_ != sentinel);
+	*/
 }
 
 void Homework02App::draw()
 {
+	/*
+	I think a better way to impliment all this code in your draw() method
+	would be to have it in seperate methods that could be called more easily.
+	This would also cut down the clutter in this method and make your code more readable
+	*/
+
 	gl::enableAlphaBlending();
 	gl::clear(Color(120,120,120));
 
